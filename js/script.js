@@ -15,7 +15,7 @@ function checkInput(e) {
     let element = e.target
     let text = element.textContent
     let number = parseInt(text, 10)
-    if (isNaN(number) || number < 0 || (element != hoursTimer && number > 59)) {
+    if (isNaN(number) || number < 0 || (element != hoursTimer && number > 59) || (element == hoursTimer && number > 24)) {
         element.textContent = "0"
     } else {
         element.textContent = number.toString()
@@ -105,28 +105,10 @@ function clock() {
     sec.style = `transform: rotate(${seconds * 6}deg); ${transitionStyle}`
     document.querySelector('.hours').textContent = formatTime(hours)
     document.querySelector('.minutes').textContent = formatTime(minutes % 60)
-    f = false;
+    f = false
     setTimeout(clock, 1000)
 }
 
 clock()
 
-// let hours = parseInt(prompt("Введите часы", "0"), 10);
-// let minutes = parseInt(prompt("Введите минуты", "1"), 10);
-// let seconds = parseInt(prompt("Введите секунды", "0"), 10);
 
-// let time = hours * 3600 + minutes * 60 + seconds;
-
-// let timerId = setInterval(() => {
-//     if(time <= 0) {
-//         clearInterval(timerId);
-//         alert("Время вышло!");
-//     } else {
-//         let h = Math.floor(time / 3600);
-//         let m = Math.floor(time % 3600 / 60);
-//         let s = Math.floor(time % 60);
-        
-//         console.log(`Осталось: ${h} часов ${m} минут ${s} секунд`);
-//         time--;
-//     }
-// }, 1000);
