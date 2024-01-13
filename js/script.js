@@ -64,7 +64,9 @@ function timerTimer(el, time) {
         }, 1000)
     } else if (el.innerHTML == 'stop') {
         sound.play()
-        alert('Твое время вышло. (Your soul is mine now)')
+        setTimeout(function () {
+            alert('Твое время вышло. (Your soul is mine now)'), 0
+        })
         stopwatch.querySelector('span').click()
         stopwatch.querySelector('span').click()
     }
