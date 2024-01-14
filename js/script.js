@@ -11,15 +11,39 @@ hoursTimer.addEventListener("input", checkInput)
 minutesTimer.addEventListener("input", checkInput)
 secondsTimer.addEventListener("input", checkInput)
 
+hoursTimer.addEventListener('focus', removeZeroOnFocus)
+minutesTimer.addEventListener('focus', removeZeroOnFocus)
+secondsTimer.addEventListener('focus', removeZeroOnFocus)
+
+hoursTimer.addEventListener('blur', addZeroOnBlur)
+minutesTimer.addEventListener('blur', addZeroOnBlur)
+secondsTimer.addEventListener('blur', addZeroOnBlur)
+
+function removeZeroOnFocus(e) {
+    let element = e.target
+    let text = element.textContent
+    if (text == '0') {
+        element.textContent = ""
+    }
+}
+
+function addZeroOnBlur(e) {
+    let element = e.target
+    let text = element.textContent
+    if (text == '') {
+        element.textContent = '0'
+    }
+}
+
 function checkInput(e) {
     let element = e.target
     let text = element.textContent
     let number = parseInt(text, 10)
     if (isNaN(number) || number < 0 || (element != hoursTimer && number > 59) || (element == hoursTimer && number > 24)) {
-        element.textContent = "0"
+        element.textContent = ""
     } else {
         element.textContent = number.toString()
-  }
+    }
 }
 
 stopwatch.addEventListener('click', function () {
@@ -53,6 +77,12 @@ stopwatch.addEventListener('click', function () {
     }
 })
 
+async function playSound() {
+    sound.play()
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    alert('Твое время вышло. (Your soul is mine now)')
+}
+
 function timerTimer(el, time) {
     if (el.innerHTML == 'stop' && time != 0) {
         time--
@@ -63,10 +93,7 @@ function timerTimer(el, time) {
             timerTimer(el, time)
         }, 1000)
     } else if (el.innerHTML == 'stop') {
-        sound.play()
-        setTimeout(function () {
-            alert('Твое время вышло. (Your soul is mine now)'), 0
-        })
+        playSound()
         stopwatch.querySelector('span').click()
         stopwatch.querySelector('span').click()
     }
